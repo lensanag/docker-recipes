@@ -1,0 +1,47 @@
+version: "3.8"
+services:
+  php81:
+    image: mcr.microsoft.com/vscode/devcontainers/php:8.1-bullseye
+    ports:
+      - 8081:80
+    volumes:
+      - ./sources/:/var/www/html/
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  sqlite:
+    image: coleifer/sqlite-web:latest
+    ports:
+      - 8999:8080
+    volumes:
+      - ./sqlite/:/data
+    environment:
+      - SQLITE_DATABASE=application.db
+  # mariadb:
+  #   image: mariadb:10.7.1-focal
+  #   ports:
+  #     - 3306:3306
+  #   volumes:
+  #     - ./mariadb/:/var/lib/mysql/
+  #   environment:
+  #     - MARIADB_USER=developer
+  #     - MARIADB_ROOT_PASSWORD=pa55w0rd
+  #     - MARIADB_DATABASE=application
+  # mysql:
+  #   image: mysql:8.0.28
+  #   ports:
+  #     - 3306:3306
+  #   volumes:
+  #     - ./mysql/:/var/lib/mysql/
+  #   environment:
+  #     - MYSQL_USER=developer
+  #     - MYSQL_ROOT_PASSWORD=pa55w0rd
+  #     - MYSQL_DATABASE=application
+  # mssql:
+  #   image: mcr.microsoft.com/mssql/server:2019-CU14-ubuntu-20.04
+  #   ports:
+  #     - 1433:1433
+  #   volumes:
+  #     - ./mssql/:/var/opt/mssql/
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     - SA_PASSWORD=pa55w0rd

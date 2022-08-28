@@ -1,0 +1,53 @@
+version: "3.8"
+services:
+  mariadb:
+    image: mariadb:10.7.1-focal
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mariadb/:/var/lib/mysql/
+    environment:
+      - MARIADB_USER=developer
+      - MARIADB_ROOT_PASSWORD=toor
+      - MARIADB_DATABASE=application
+    command: --default-authentication-plugin=mysql_native_password
+  mysql:
+    image: mysql:8.0.28
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/:/var/lib/mysql/
+    environment:
+      - MYSQL_USER=developer
+      - MYSQL_ROOT_PASSWORD=toor
+      - MYSQL_DATABASE=application
+    command: --default-authentication-plugin=mysql_native_password
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-CU14-ubuntu-20.04
+    ports:
+      - 1433:1433
+    volumes:
+      - ./mssql/:/var/opt/mssql/
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=toor
+  postgres:
+    image: postgres:14.1-alpine3.15
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres/:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=developer
+      - POSTGRES_PASSWORD=toor
+      - POSTGRES_DB=application
+  mongo:
+    image: mongo:5.0.5-focal
+    ports:
+      - 27017:27017
+      # - 27018:27018 # on shardsvr
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=toor
+    volumes:
+      - ./mongo/:/data/db
